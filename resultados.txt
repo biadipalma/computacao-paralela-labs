@@ -1,0 +1,311 @@
+===== INICIO DOS TESTES - Sat Sep 26 12:22:03 UTC 2026 =====
+### 0. HARDWARE E SISTEMA ###
+--- Linux (Codespaces) detectado ---
+$ uname -a
+Linux codespaces-82181e 6.8.0-1064-azure #72~22.04.1-Ubuntu SMP Wed Jul 22 23:39:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+$ lscpu
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  2
+On-line CPU(s) list:                     0,1
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD EPYC 9V74 80-Core Processor
+CPU family:                              25
+Model:                                   17
+Thread(s) per core:                      2
+Core(s) per socket:                      1
+Socket(s):                               1
+Stepping:                                1
+BogoMIPS:                                5192.28
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm
+Virtualization:                          AMD-V
+Hypervisor vendor:                       Microsoft
+Virtualization type:                     full
+L1d cache:                               32 KiB (1 instance)
+L1i cache:                               32 KiB (1 instance)
+L2 cache:                                1 MiB (1 instance)
+L3 cache:                                32 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0,1
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Vulnerable: Clear CPU buffers attempted, no microcode
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+
+$ cat /proc/meminfo
+MemTotal:        8132888 kB
+MemFree:          201072 kB
+MemAvailable:    6073672 kB
+Buffers:          443160 kB
+Cached:          5346900 kB
+SwapCached:            0 kB
+Active:          3171060 kB
+Inactive:        4018564 kB
+Active(anon):    1474420 kB
+Inactive(anon):      796 kB
+Active(file):    1696640 kB
+Inactive(file):  4017768 kB
+Unevictable:       31084 kB
+Mlocked:           28012 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:              1108 kB
+Writeback:             0 kB
+AnonPages:       1430636 kB
+Mapped:           725132 kB
+Shmem:             66548 kB
+KReclaimable:     471812 kB
+Slab:             578336 kB
+SReclaimable:     471812 kB
+SUnreclaim:       106524 kB
+KernelStack:       10208 kB
+PageTables:        26856 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     4066444 kB
+Committed_AS:    5239236 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       46800 kB
+VmallocChunk:          0 kB
+Percpu:             1248 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+Unaccepted:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:      153536 kB
+DirectMap2M:     6137856 kB
+DirectMap1G:     4194304 kB
+
+$ gcc --version
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+### 1. COMPILACAO ###
+$ make clean
+rm -rf bin
+
+$ make
+mkdir -p bin
+gcc -O0 -Wall src/varredura_linha.c -o bin/varredura_linha_O0
+gcc -O0 -Wall src/varredura_coluna.c -o bin/varredura_coluna_O0
+gcc -O0 -Wall src/matmul_padrao.c -o bin/matmul_padrao_O0
+gcc -O0 -Wall src/matmul_bloco.c -o bin/matmul_bloco_O0
+gcc -O3 -Wall src/varredura_linha.c -o bin/varredura_linha_O3
+gcc -O3 -Wall src/varredura_coluna.c -o bin/varredura_coluna_O3
+gcc -O3 -Wall src/matmul_padrao.c -o bin/matmul_padrao_O3
+gcc -O3 -Wall src/matmul_bloco.c -o bin/matmul_bloco_O3
+gcc -O3 -Wall src/matmul_pthreads.c -o bin/matmul_pthreads_O3 -lpthread
+gcc -O3 -Wall src/matmul_pthreads_bloco.c -o bin/matmul_pthreads_bloco_O3 -lpthread
+
+### 2. ITEM 2 - VARREDURA LINHA vs COLUNA ###
+$ ./bin/varredura_linha_O3 512
+[Varredura Linha] N: 512 | Pares: 131072 | Tempo: 0.000104 s
+
+$ ./bin/varredura_coluna_O3 512
+[Varredura Coluna] N: 512 | Pares: 131072 | Tempo: 0.001121 s
+
+$ ./bin/varredura_linha_O3 1024
+[Varredura Linha] N: 1024 | Pares: 524288 | Tempo: 0.000340 s
+
+$ ./bin/varredura_coluna_O3 1024
+[Varredura Coluna] N: 1024 | Pares: 524288 | Tempo: 0.004934 s
+
+$ ./bin/varredura_linha_O3 2048
+[Varredura Linha] N: 2048 | Pares: 2097152 | Tempo: 0.001695 s
+
+$ ./bin/varredura_coluna_O3 2048
+[Varredura Coluna] N: 2048 | Pares: 2097152 | Tempo: 0.032087 s
+
+$ ./bin/varredura_linha_O3 4096
+[Varredura Linha] N: 4096 | Pares: 8388608 | Tempo: 0.005045 s
+
+$ ./bin/varredura_coluna_O3 4096
+[Varredura Coluna] N: 4096 | Pares: 8388608 | Tempo: 0.156652 s
+
+$ ./bin/varredura_linha_O3 8192
+[Varredura Linha] N: 8192 | Pares: 33554432 | Tempo: 0.021562 s
+
+$ ./bin/varredura_coluna_O3 8192
+[Varredura Coluna] N: 8192 | Pares: 33554432 | Tempo: 0.842025 s
+
+### 3. ITEM 3 - MATMUL PADRAO vs BLOCO (-O0 e -O3) ###
+$ ./bin/matmul_padrao_O0 512
+[Matmul Padrao] N: 512 | Tempo: 0.6234 s | GFLOPS: 0.43
+Checksum: 5226393919029248.000000
+
+$ ./bin/matmul_bloco_O0 512 64
+[Matmul Bloco] N: 512 | Bloco B: 64 | Tempo: 0.5053 s | GFLOPS: 0.53
+Checksum: 5226393919029248.000000
+
+$ ./bin/matmul_padrao_O3 512
+[Matmul Padrao] N: 512 | Tempo: 0.5153 s | GFLOPS: 0.52
+Checksum: 5226393919029248.000000
+
+$ ./bin/matmul_bloco_O3 512 64
+[Matmul Bloco] N: 512 | Bloco B: 64 | Tempo: 0.0323 s | GFLOPS: 8.30
+Checksum: 5226393919029248.000000
+
+$ ./bin/matmul_padrao_O0 1024
+[Matmul Padrao] N: 1024 | Tempo: 5.0074 s | GFLOPS: 0.43
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_bloco_O0 1024 64
+[Matmul Bloco] N: 1024 | Bloco B: 64 | Tempo: 3.8771 s | GFLOPS: 0.55
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_padrao_O3 1024
+[Matmul Padrao] N: 1024 | Tempo: 6.6334 s | GFLOPS: 0.32
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_bloco_O3 1024 64
+[Matmul Bloco] N: 1024 | Bloco B: 64 | Tempo: 0.2670 s | GFLOPS: 8.04
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_padrao_O0 1536
+[Matmul Padrao] N: 1536 | Tempo: 21.1309 s | GFLOPS: 0.34
+Checksum: 3823546831523143680.000000
+
+$ ./bin/matmul_bloco_O0 1536 64
+[Matmul Bloco] N: 1536 | Bloco B: 64 | Tempo: 13.0156 s | GFLOPS: 0.56
+Checksum: 3823546831523143680.000000
+
+$ ./bin/matmul_padrao_O3 1536
+[Matmul Padrao] N: 1536 | Tempo: 20.4613 s | GFLOPS: 0.35
+Checksum: 3823546831523143680.000000
+
+$ ./bin/matmul_bloco_O3 1536 64
+[Matmul Bloco] N: 1536 | Bloco B: 64 | Tempo: 0.8843 s | GFLOPS: 8.20
+Checksum: 3823546831523143680.000000
+
+### 4. PROFILING DE CACHE ###
+$ valgrind --tool=cachegrind --cache-sim=yes --branch-sim=no ./bin/matmul_padrao_O3 512
+==9029== Cachegrind, a high-precision tracing profiler
+==9029== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==9029== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==9029== Command: ./bin/matmul_padrao_O3 512
+==9029== 
+--9029-- warning: L3 cache found, using its data for the LL simulation.
+--9029-- warning: specified LL cache: line_size 64  assoc 1  total_size 335,544,320
+--9029-- warning: simulated LL cache: line_size 64  assoc 1  total_size 268,435,456
+[Matmul Padrao] N: 512 | Tempo: 3.2539 s | GFLOPS: 0.08
+Checksum: 5226393919029248.000000
+==9029== 
+==9029== I refs:        744,566,857
+==9029== I1  misses:          1,514
+==9029== LLi misses:          1,488
+==9029== I1  miss rate:        0.00%
+==9029== LLi miss rate:        0.00%
+==9029== 
+==9029== D refs:        202,698,599  (202,159,247 rd   + 539,352 wr)
+==9029== D1  misses:    134,914,421  (134,586,290 rd   + 328,131 wr)
+==9029== LLd misses:         99,779  (      1,105 rd   +  98,674 wr)
+==9029== D1  miss rate:        66.6% (       66.6%     +    60.8%  )
+==9029== LLd miss rate:         0.0% (        0.0%     +    18.3%  )
+==9029== 
+==9029== LL refs:       134,915,935  (134,587,804 rd   + 328,131 wr)
+==9029== LL misses:         101,267  (      2,593 rd   +  98,674 wr)
+==9029== LL miss rate:          0.0% (        0.0%     +    18.3%  )
+
+$ valgrind --tool=cachegrind --cache-sim=yes --branch-sim=no ./bin/matmul_bloco_O3 512 64
+==9075== Cachegrind, a high-precision tracing profiler
+==9075== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==9075== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==9075== Command: ./bin/matmul_bloco_O3 512 64
+==9075== 
+--9075-- warning: L3 cache found, using its data for the LL simulation.
+--9075-- warning: specified LL cache: line_size 64  assoc 1  total_size 335,544,320
+--9075-- warning: simulated LL cache: line_size 64  assoc 1  total_size 268,435,456
+[Matmul Bloco] N: 512 | Bloco B: 64 | Tempo: 1.5016 s | GFLOPS: 0.18
+Checksum: 5226393919029248.000000
+==9075== 
+==9075== I refs:        410,912,012
+==9075== I1  misses:          1,527
+==9075== LLi misses:          1,501
+==9075== I1  miss rate:        0.00%
+==9075== LLi miss rate:        0.00%
+==9075== 
+==9075== D refs:        148,219,376  (113,104,369 rd   + 35,115,007 wr)
+==9075== D1  misses:     19,564,635  ( 19,498,530 rd   +     66,105 wr)
+==9075== LLd misses:         99,783  (     33,871 rd   +     65,912 wr)
+==9075== D1  miss rate:        13.2% (       17.2%     +        0.2%  )
+==9075== LLd miss rate:         0.1% (        0.0%     +        0.2%  )
+==9075== 
+==9075== LL refs:        19,566,162  ( 19,500,057 rd   +     66,105 wr)
+==9075== LL misses:         101,284  (     35,372 rd   +     65,912 wr)
+==9075== LL miss rate:          0.0% (        0.0%     +        0.2%  )
+
+### 5. ITEM 4 - ESCALABILIDADE PTHREADS ###
+$ ./bin/matmul_pthreads_O3 1024 1
+[Matmul Pthreads] N: 1024 | Threads: 1 | Tempo: 4.9263 s | GFLOPS: 0.44
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_O3 1024 2
+[Matmul Pthreads] N: 1024 | Threads: 2 | Tempo: 3.5447 s | GFLOPS: 0.61
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_O3 1024 4
+[Matmul Pthreads] N: 1024 | Threads: 4 | Tempo: 3.4535 s | GFLOPS: 0.62
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_O3 1024 8
+[Matmul Pthreads] N: 1024 | Threads: 8 | Tempo: 3.4806 s | GFLOPS: 0.62
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_O3 1024 16
+[Matmul Pthreads] N: 1024 | Threads: 16 | Tempo: 3.3816 s | GFLOPS: 0.64
+Checksum: 335378213347786752.000000
+
+### 6. ITEM 4 - PTHREADS + BLOCAGEM ###
+$ ./bin/matmul_pthreads_bloco_O3 1024 1 64
+[Matmul Pthreads+Bloco] N: 1024 | Threads: 1 | Bloco: 64 | Tempo: 0.4364 s | GFLOPS: 4.92
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_bloco_O3 1024 2 64
+[Matmul Pthreads+Bloco] N: 1024 | Threads: 2 | Bloco: 64 | Tempo: 0.4454 s | GFLOPS: 4.82
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_bloco_O3 1024 4 64
+[Matmul Pthreads+Bloco] N: 1024 | Threads: 4 | Bloco: 64 | Tempo: 0.5261 s | GFLOPS: 4.08
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_bloco_O3 1024 8 64
+[Matmul Pthreads+Bloco] N: 1024 | Threads: 8 | Bloco: 64 | Tempo: 0.4417 s | GFLOPS: 4.86
+Checksum: 335378213347786752.000000
+
+$ ./bin/matmul_pthreads_bloco_O3 1024 16 64
+[Matmul Pthreads+Bloco] N: 1024 | Threads: 16 | Bloco: 64 | Tempo: 0.4276 s | GFLOPS: 5.02
+Checksum: 335378213347786752.000000
+
+===== FIM DOS TESTES - Sat Sep 26 12:23:51 UTC 2026 =====
